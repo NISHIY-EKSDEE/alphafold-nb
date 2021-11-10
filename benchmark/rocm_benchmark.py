@@ -295,9 +295,6 @@ class ROCmBenchmark(Benchmark):
         except RuntimeError as e:
             self.print_fn(f"Doesn't fit on GPU. {e}")
             return "N/A", None
-    def runn(self):
-        self.inference_memory(self.args.model_names[0], 8, 32)
-    runn()
 
 
 
