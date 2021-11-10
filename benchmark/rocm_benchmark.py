@@ -169,7 +169,7 @@ class ROCmBenchmark(Benchmark):
             # is measured using .half() for now https://github.com/NVIDIA/apex/issues/439
             model.half()
 
-            inference_model = model
+        inference_model = model
 
         def encoder_decoder_forward():
             outputs = inference_model(input_ids, decoder_input_ids=input_ids)
