@@ -51,7 +51,7 @@ class ROCmBenchmarkArguments(BenchmarkArguments):
                 logger.warning(
                     f"{deprecated_arg} is depreciated. Please use --no_{positive_arg} or {positive_arg}={kwargs[positive_arg]}"
                 )
-
+        self.model = kwargs.pop("model", None)
         self.torchscript = kwargs.pop("torchscript", self.torchscript)
         self.torch_xla_tpu_print_metrics = kwargs.pop("torch_xla_tpu_print_metrics", self.torch_xla_tpu_print_metrics)
         self.fp16_opt_level = kwargs.pop("fp16_opt_level", self.fp16_opt_level)
@@ -126,28 +126,30 @@ class ROCmBenchmark(Benchmark):
         return self._measure_memory(_train)
 
     def _prepare_inference_func(self, model_name: str, batch_size: int, sequence_length: int) -> Callable[[], None]:
-        config = self.config_dict[model_name]
-
-        if self.args.torchscript:
-            config.torchscript = True
-
-        has_model_class_in_config = (
-            hasattr(config, "architectures")
-            and isinstance(config.architectures, list)
-            and len(config.architectures) > 0
-        )
-        if not self.args.only_pretrain_model and has_model_class_in_config:
-            try:
-                model_class = config.architectures[0]
-                transformers_module = __import__("transformers", fromlist=[model_class])
-                model_cls = getattr(transformers_module, model_class)
-                model = model_cls(config)
-            except ImportError:
-                raise ImportError(
-                    f"{model_class} does not exist. If you just want to test the pretrained model, you might want to set `--only_pretrain_model` or `args.only_pretrain_model=True`."
-                )
+        if self.args.model:
+            model = self.args.model
         else:
-            model = MODEL_MAPPING[config.__class__](config)
+            config = self.config_dict[model_name]
+            if self.args.torchscript:
+                config.torchscript = True
+
+            has_model_class_in_config = (
+                hasattr(config, "architectures")
+                and isinstance(config.architectures, list)
+                and len(config.architectures) > 0
+            )
+            if not self.args.only_pretrain_model and has_model_class_in_config:
+                try:
+                    model_class = config.architectures[0]
+                    transformers_module = __import__("transformers", fromlist=[model_class])
+                    model_cls = getattr(transformers_module, model_class)
+                    model = model_cls(config)
+                except ImportError:
+                    raise ImportError(
+                        f"{model_class} does not exist. If you just want to test the pretrained model, you might want to set `--only_pretrain_model` or `args.only_pretrain_model=True`."
+                    )
+            else:
+                model = MODEL_MAPPING[config.__class__](config)
         print('!!!!! start inference')
         model.eval()
         model.to(self.args.device)
