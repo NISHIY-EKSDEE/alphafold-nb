@@ -1,4 +1,5 @@
 import timeit
+import traceback
 from dataclasses import dataclass, field
 from typing import Callable, Optional, Tuple
 
@@ -125,7 +126,10 @@ class ROCmBenchmark(Benchmark):
     def _train_memory(
         self, model_name: str, batch_size: int, sequence_length: int
     ) -> [Memory, Optional[MemorySummary]]:
-        _train = self._prepare_train_func(model_name, batch_size, sequence_length)
+        try:
+            _train = self._prepare_train_func(model_name, batch_size, sequence_length)
+        except Exception:
+            traceback.print_exc()
         return self._measure_memory(_train)
 
     def _prepare_inference_func(self, model_name: str, batch_size: int, sequence_length: int) -> Callable[[], None]:
@@ -153,10 +157,9 @@ class ROCmBenchmark(Benchmark):
                     )
             else:
                 model = MODEL_MAPPING[config.__class__](config)
-        model.eval()
-        print('!!!!! start inference')
+            model.eval()
         model.to(self.args.device)
-
+        print('!!!!! start inference')
         # encoder-decoder has vocab size saved differently
         vocab_size = config.vocab_size if hasattr(config, "vocab_size") else config.encoder.vocab_size
         input_ids = random.randint(key, (batch_size, sequence_length), dtype=jax.numpy.long, minval=0, maxval=vocab_size)
