@@ -1675,6 +1675,7 @@ def showMemInfo(deviceList, memType):
     for device in deviceList:
         for mem in returnTypes:
             mem = mem.upper()
+            print(device, mem)
             memInfo = getMemInfo(device, mem)
             printLog(device, '%s Total Memory (B)' % (mem), memInfo[1])
             printLog(device, '%s Total Used Memory (B)' % (mem), memInfo[0])
