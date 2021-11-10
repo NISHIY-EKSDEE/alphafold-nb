@@ -2,6 +2,7 @@ import timeit
 from dataclasses import dataclass, field
 from typing import Callable, Optional, Tuple
 
+import numpy as np
 from transformers.benchmark.benchmark_args_utils import BenchmarkArguments
 from transformers.configuration_utils import PretrainedConfig
 from transformers.file_utils import is_py3nvml_available, is_torch_available, cached_property
@@ -158,9 +159,8 @@ class ROCmBenchmark(Benchmark):
             model.to(self.args.device)
         # encoder-decoder has vocab size saved differently
         vocab_size = config.vocab_size if hasattr(config, "vocab_size") else config.encoder.vocab_size
-        print('!!!!! start inference')
-        input_ids = random.randint(key, (batch_size, sequence_length), minval=0,
-                                   maxval=vocab_size)
+        arr = np.random.randint(low=0, high=vocab_size, size=(batch_size, sequence_length))
+        input_ids = jax.numpy.array(arr)
         print('!!!!! start inference')
         if self.args.fp16:
             logger.info("Running training in Mixed Precision...")
