@@ -129,10 +129,10 @@ class ROCmBenchmark(Benchmark):
         return self._measure_memory(_train)
 
     def _prepare_inference_func(self, model_name: str, batch_size: int, sequence_length: int) -> Callable[[], None]:
+        config = self.config_dict[model_name]
         if self.args.model:
             model = self.args.model
         else:
-            config = self.config_dict[model_name]
             if self.args.torchscript:
                 config.torchscript = True
 
