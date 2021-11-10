@@ -2689,7 +2689,6 @@ def save(deviceList, savefilepath):
 # The code below is for when this script is run as an executable instead of when imported as a module
 if __name__ == '__main__':
     print(1111)
-    time.sleep(10000000000)
     parser = argparse.ArgumentParser(
         description='AMD ROCm System Management Interface  |  ROCM-SMI version: %s  |  Kernel version: %s' % (
         __version__, getVersion(None, rsmi_sw_component_t.RSMI_SW_COMP_DRIVER)),
