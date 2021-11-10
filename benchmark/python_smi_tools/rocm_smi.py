@@ -2863,7 +2863,6 @@ if __name__ == '__main__':
                 deviceList.append(device)
     else:
         deviceList = listDevices()
-    print(deviceList)
     if deviceList is None:
         printLog(None, 'ERROR: No DRM devices available. Exiting', None)
         sys.exit(1)
@@ -2953,6 +2952,7 @@ if __name__ == '__main__':
     if args.showgpuclocks:
         showCurrentClocks(deviceList, 'sclk')
     if args.showfan:
+        print('here')
         showCurrentFans(deviceList)
     if args.showperflevel:
         showPerformanceLevel(deviceList)
