@@ -6,7 +6,7 @@ if __name__ == '__main__':
     import jax
     print(jax.devices()[0])
     print(getMaxPower(0))
-    print(showMemUse([0]))
+    print(showMemUse([1]))
     tokenizer = GPT2Tokenizer.from_pretrained('EleutherAI/gpt-neo-1.3B')
     model = FlaxGPTNeoModel.from_pretrained('EleutherAI/gpt-neo-1.3B')
     args = ROCmBenchmarkArguments(model=model, batch_sizes=[8], sequence_lengths=[8, 32, 128, 512],
