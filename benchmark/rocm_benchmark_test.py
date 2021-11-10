@@ -2,7 +2,7 @@ from rocm_benchmark import ROCmBenchmark, ROCmBenchmarkArguments
 
 if __name__ == '__main__':
     from transformers import GPT2Tokenizer, FlaxGPTNeoModel
-    from python_smi_tools.rocm_smi import getMaxPower, showMemInfo
+    from python_smi_tools.rocm_smi import getMaxPower, showMemInfo, initializeRsmi
     import jax
     print(jax.devices()[0].id)
     print(showMemInfo([0], ['vram']))
