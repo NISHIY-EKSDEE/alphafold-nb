@@ -55,6 +55,9 @@ class ROCmBenchmarkArguments(BenchmarkArguments):
         self.torchscript = kwargs.pop("torchscript", self.torchscript)
         self.torch_xla_tpu_print_metrics = kwargs.pop("torch_xla_tpu_print_metrics", self.torch_xla_tpu_print_metrics)
         self.fp16_opt_level = kwargs.pop("fp16_opt_level", self.fp16_opt_level)
+        if kwargs.get('models') is None and self.model is not None:
+            kwargs['models'] = ['user_model']
+
         super().__init__(**kwargs)
 
     torchscript: bool = field(default=False, metadata={"help": "Trace the models using torchscript"})
