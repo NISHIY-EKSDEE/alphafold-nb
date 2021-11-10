@@ -2952,7 +2952,7 @@ if __name__ == '__main__':
     if args.showgpuclocks:
         showCurrentClocks(deviceList, 'sclk')
     if args.showfan:
-        print('here')
+        print(deviceList)
         showCurrentFans(deviceList)
     if args.showperflevel:
         showPerformanceLevel(deviceList)
