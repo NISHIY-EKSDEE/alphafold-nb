@@ -56,7 +56,7 @@ class ROCmBenchmarkArguments(BenchmarkArguments):
         self.torch_xla_tpu_print_metrics = kwargs.pop("torch_xla_tpu_print_metrics", self.torch_xla_tpu_print_metrics)
         self.fp16_opt_level = kwargs.pop("fp16_opt_level", self.fp16_opt_level)
         if kwargs.get('models') is None and self.model is not None:
-            kwargs['models'] = ['user_model']
+            kwargs['models'] = ['bert-base-uncased']
 
         super().__init__(**kwargs)
 
