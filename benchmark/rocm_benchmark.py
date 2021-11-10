@@ -116,6 +116,7 @@ class ROCmBenchmark(Benchmark):
         self, model_name: str, batch_size: int, sequence_length: int
     ) -> [Memory, Optional[MemorySummary]]:
         _inference = self._prepare_inference_func(model_name, batch_size, sequence_length)
+        print('!!!!! start inference')
         return self._measure_memory(_inference)
 
     def _train_speed(self, model_name: str, batch_size: int, sequence_length: int) -> float:
@@ -155,7 +156,6 @@ class ROCmBenchmark(Benchmark):
                 model = MODEL_MAPPING[config.__class__](config)
             model.eval()
             model.to(self.args.device)
-        print('!!!!! start inference')
         # encoder-decoder has vocab size saved differently
         vocab_size = config.vocab_size if hasattr(config, "vocab_size") else config.encoder.vocab_size
 
