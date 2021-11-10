@@ -75,7 +75,7 @@ class ROCmBenchmarkArguments(BenchmarkArguments):
 
     @cached_property
     def _setup_devices(self) -> Tuple["jax.device", int]:
-        return jax.devices()[0], len(jax.devices())
+        return jax.devices()[0]['id'], len(jax.devices())
 
     @property
     def is_tpu(self):
