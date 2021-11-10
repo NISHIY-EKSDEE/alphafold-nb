@@ -8,7 +8,7 @@ It uses Ctypes to call the rocm_smi_lib API.
 Recommended: At least one AMD GPU with ROCm driver installed
 Required: ROCm SMI library installed (librocm_smi64)
 """
-
+import time
 from __future__ import print_function
 import argparse
 import json
@@ -2690,6 +2690,7 @@ def save(deviceList, savefilepath):
 # The code below is for when this script is run as an executable instead of when imported as a module
 if __name__ == '__main__':
     print(1111)
+    time.sleep(10000000000)
     parser = argparse.ArgumentParser(
         description='AMD ROCm System Management Interface  |  ROCM-SMI version: %s  |  Kernel version: %s' % (
         __version__, getVersion(None, rsmi_sw_component_t.RSMI_SW_COMP_DRIVER)),
