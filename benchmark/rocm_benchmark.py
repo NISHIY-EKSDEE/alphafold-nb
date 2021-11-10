@@ -158,8 +158,9 @@ class ROCmBenchmark(Benchmark):
         print('!!!!! start inference')
         # encoder-decoder has vocab size saved differently
         vocab_size = config.vocab_size if hasattr(config, "vocab_size") else config.encoder.vocab_size
-        input_ids = random.randint(key, (batch_size, sequence_length), dtype=jax.numpy.uint64, minval=0, maxval=vocab_size)
 
+        input_ids = random.randint(key, (batch_size, sequence_length), dtype=jax.numpy.uint64, minval=0,
+                                   maxval=vocab_size)
         if self.args.fp16:
             logger.info("Running training in Mixed Precision...")
             assert self.args.is_gpu, "Mixed precision is possible only for GPU."
