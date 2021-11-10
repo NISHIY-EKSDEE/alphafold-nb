@@ -5,6 +5,7 @@ if __name__ == '__main__':
     from python_smi_tools.rocm_smi import getMaxPower, showMemInfo, initializeRsmi
     # import jax
     # print(jax.devices()[0].id)
+    initializeRsmi()
     print(showMemInfo([0], ['vram']))
     # tokenizer = GPT2Tokenizer.from_pretrained('EleutherAI/gpt-neo-1.3B')
     # model = FlaxGPTNeoModel.from_pretrained('EleutherAI/gpt-neo-1.3B')
