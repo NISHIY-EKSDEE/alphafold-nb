@@ -20,7 +20,7 @@ import _thread
 import time
 from time import ctime
 from subprocess import check_output
-from rsmiBindings import *
+from .rsmiBindings import *
 
 # rocmSmiLib_cli version. Increment this as needed.
 # Major version - Increment when backwards-compatibility breaks
