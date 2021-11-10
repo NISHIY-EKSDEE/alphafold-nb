@@ -159,8 +159,8 @@ class ROCmBenchmark(Benchmark):
             model.to(self.args.device)
         # encoder-decoder has vocab size saved differently
         vocab_size = config.vocab_size if hasattr(config, "vocab_size") else config.encoder.vocab_size
-        arr = np.random.randint(low=0, high=vocab_size, size=(batch_size, sequence_length))
-        input_ids = jax.numpy.array(arr)
+        input_ids = np.random.randint(low=0, high=vocab_size, size=(batch_size, sequence_length))
+        # input_ids = jax.numpy.array(arr)
         print('!!!!! start inference')
         if self.args.fp16:
             logger.info("Running training in Mixed Precision...")
