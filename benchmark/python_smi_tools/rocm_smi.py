@@ -8,7 +8,6 @@ It uses Ctypes to call the rocm_smi_lib API.
 Recommended: At least one AMD GPU with ROCm driver installed
 Required: ROCm SMI library installed (librocm_smi64)
 """
-import time
 from __future__ import print_function
 import argparse
 import json
