@@ -21,7 +21,7 @@ from jax import random
 import jax
 from multiprocessing import Pipe, Process
 
-from python_smi_tools.rocm_smi import showMemInfo, initializeRsmi
+from python_smi_tools.rocm_smi import getMemInfo, initializeRsmi
 
 key = random.PRNGKey(0)
 logger = logging.get_logger(__name__)
@@ -275,7 +275,7 @@ class ROCmBenchmark(Benchmark):
                 def trace_rocm_memory(device, exit_pipe, interval=0.005):
                     memory_trace = []
                     while True:
-                        memory_trace.append(showMemInfo(device, 'vram')[0])
+                        memory_trace.append(getMemInfo(device, 'vram')[0])
                         if exit_pipe.poll(interval):
                             exit_pipe.send(memory_trace)
                             return 0
