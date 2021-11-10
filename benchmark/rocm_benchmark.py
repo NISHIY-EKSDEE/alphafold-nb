@@ -265,7 +265,7 @@ class ROCmBenchmark(Benchmark):
             return "N/A"
 
     def _measure_memory(self, func: Callable[[], None]) -> [Memory, MemorySummary]:
-        print('!!!!!!', None)
+
         try:
             if self.args.is_gpu:
                 logger.info(
@@ -285,6 +285,7 @@ class ROCmBenchmark(Benchmark):
                 trace_rocm_memory_porcess = Process(target=trace_rocm_memory, args=(self.args.device, receiver))
                 trace_rocm_memory_porcess.start()
                 # start measure
+                print('!!!!!! start')
                 func()
                 # stop measure
                 sender.send(0)
