@@ -4,7 +4,7 @@ if __name__ == '__main__':
     from transformers import GPT2Tokenizer, FlaxGPTNeoModel
     from python_smi_tools.rocm_smi import getMaxPower
     import jax
-    print(jax.devices()[0]['id'])
+    print(jax.devices()[0].id)
     print(getMaxPower(0))
     tokenizer = GPT2Tokenizer.from_pretrained('EleutherAI/gpt-neo-1.3B')
     model = FlaxGPTNeoModel.from_pretrained('EleutherAI/gpt-neo-1.3B')
