@@ -2863,7 +2863,7 @@ if __name__ == '__main__':
                 deviceList.append(device)
     else:
         deviceList = listDevices()
-
+    print(deviceList)
     if deviceList is None:
         printLog(None, 'ERROR: No DRM devices available. Exiting', None)
         sys.exit(1)
