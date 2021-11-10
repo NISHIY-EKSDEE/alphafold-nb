@@ -153,8 +153,8 @@ class ROCmBenchmark(Benchmark):
                     )
             else:
                 model = MODEL_MAPPING[config.__class__](config)
-        print('!!!!! start inference')
         model.eval()
+        print('!!!!! start inference')
         model.to(self.args.device)
 
         # encoder-decoder has vocab size saved differently
