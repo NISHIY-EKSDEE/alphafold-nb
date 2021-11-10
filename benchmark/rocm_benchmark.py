@@ -158,7 +158,7 @@ class ROCmBenchmark(Benchmark):
             model.to(self.args.device)
         # encoder-decoder has vocab size saved differently
         vocab_size = config.vocab_size if hasattr(config, "vocab_size") else config.encoder.vocab_size
-
+        print('!!!!! start inference')
         input_ids = random.randint(key, (batch_size, sequence_length), dtype=jax.numpy.uint64, minval=0,
                                    maxval=vocab_size)
         print('!!!!! start inference')
