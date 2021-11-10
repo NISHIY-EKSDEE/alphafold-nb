@@ -161,6 +161,7 @@ class ROCmBenchmark(Benchmark):
 
         input_ids = random.randint(key, (batch_size, sequence_length), dtype=jax.numpy.uint64, minval=0,
                                    maxval=vocab_size)
+        print('!!!!! start inference')
         if self.args.fp16:
             logger.info("Running training in Mixed Precision...")
             assert self.args.is_gpu, "Mixed precision is possible only for GPU."
@@ -177,7 +178,6 @@ class ROCmBenchmark(Benchmark):
         def encoder_forward():
             outputs = inference_model(input_ids)
             return outputs
-        print('!!!!! start inference')
         _forward = encoder_decoder_forward if config.is_encoder_decoder else encoder_forward
         return _forward
 
