@@ -2952,7 +2952,6 @@ if __name__ == '__main__':
     if args.showgpuclocks:
         showCurrentClocks(deviceList, 'sclk')
     if args.showfan:
-        print(deviceList)
         showCurrentFans(deviceList)
     if args.showperflevel:
         showPerformanceLevel(deviceList)
@@ -2991,6 +2990,7 @@ if __name__ == '__main__':
     if args.showbus:
         showBus(deviceList)
     if args.showmeminfo:
+        print(deviceList, args.showmeminfo)
         showMemInfo(deviceList, args.showmeminfo)
     if args.showrasinfo or str(args.showrasinfo) == '[]':
         showRasInfo(deviceList, args.showrasinfo)
