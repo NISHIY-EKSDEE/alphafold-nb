@@ -290,7 +290,7 @@ class ROCmBenchmark(Benchmark):
                 # cpu
                 memory_bytes = measure_peak_memory_cpu(func)
                 memory = Memory(memory_bytes) if isinstance(memory_bytes, int) else memory_bytes
-            print(memory, None)
+            print('!!!!!!', memory, None)
             return memory, None
         except RuntimeError as e:
             self.print_fn(f"Doesn't fit on GPU. {e}")
