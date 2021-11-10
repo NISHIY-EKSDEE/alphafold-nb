@@ -7,6 +7,9 @@ import sys
 sys.path.append('/workspace/miniconda/lib/python3.9/site-packages')
 sys.path.append('/workspace/alphafold')
 sys.path.append('/workspace/jax')
+sys.path.append('/usr/lib/python3.9/site-packages')
+sys.path.append('/usr/local/lib/python3.9/site-packages')
+
 
 import jax
 
