@@ -1,4 +1,4 @@
-from benchmark.benchmark_base.rocm_benchmark import run_rocm_benchmark
+from benchmark_base.rocm_benchmark import run_rocm_benchmark
 
 if __name__ == '__main__':
     from transformers import GPT2Tokenizer, FlaxGPTNeoModel
