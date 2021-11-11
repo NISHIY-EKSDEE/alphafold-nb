@@ -12,12 +12,12 @@ if __name__ == '__main__':
 
     tokenizer = GPT2Tokenizer.from_pretrained('EleutherAI/gpt-neo-1.3B')
     model = FlaxGPTNeoModel.from_pretrained('EleutherAI/gpt-neo-1.3B')
-    inputs = tokenizer("Hello, my dog is cute", return_tensors='jax')
-    print(inputs)
-    res = model(np.random.randint(low=0, high=11111, size=(2, 25)))
-    print(res)
-    print('fail')
-    exit()
+    # inputs = tokenizer("Hello, my dog is cute", return_tensors='jax')
+    # print(inputs)
+    # res = model(np.random.randint(low=0, high=11111, size=(2, 25)))
+    # print(res)
+    # print('fail')
+    # exit()
 
     args = ROCmBenchmarkArguments(model=model, batch_sizes=[2], sequence_lengths=[8, 32, 128, 512],)
     benchmark = ROCmBenchmark(args)
