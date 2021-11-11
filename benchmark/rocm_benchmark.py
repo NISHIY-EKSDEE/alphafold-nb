@@ -134,6 +134,7 @@ class ROCmBenchmark(Benchmark):
         config = self.config_dict[model_name]
         if self.args.model:
             model = self.args.model
+            print(model)
         else:
             if self.args.torchscript:
                 config.torchscript = True
