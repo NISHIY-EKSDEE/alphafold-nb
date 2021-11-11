@@ -297,7 +297,7 @@ class ROCmBenchmark(Benchmark):
                     # trace_rocm_memory_porcess.join()
                 except:
                     # trace_rocm_memory_porcess.terminate()
-                pass
+                    pass
 
                 # max_bytes_in_use = max(memory_trace)
                 memory = Memory(0)
