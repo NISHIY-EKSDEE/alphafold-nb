@@ -163,6 +163,9 @@ class ROCmBenchmark(Benchmark):
         # input_ids = jax.numpy.array(arr)
         print('!!!!! start inference')
         inference_model = model
+        res = inference_model(np.random.randint(low=0, high=11111, size=(2, 25)))
+        print(res)
+        print('!!!!! stop inference')
 
         def encoder_decoder_forward():
             outputs = inference_model(input_ids, decoder_input_ids=input_ids)
