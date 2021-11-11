@@ -1,7 +1,8 @@
+from __future__ import absolute_import
 import timeit
 from multiprocessing import Pipe, Process
 import jax
-from benchmark.python_smi_tools.rocm_smi import getMemInfo, initializeRsmi
+from ..python_smi_tools.rocm_smi import getMemInfo, initializeRsmi
 
 
 def print_result(memory, compute_time):
