@@ -37,6 +37,7 @@ def run_rocm_benchmark(model, input):
     initializeRsmi()
     receiver, sender = Pipe()
     try:
+        print('Running memory test')
         trace_rocm_memory_porcess = Process(target=trace_rocm_memory, args=(jax.devices()[0].id, receiver))
         trace_rocm_memory_porcess.start()
 
