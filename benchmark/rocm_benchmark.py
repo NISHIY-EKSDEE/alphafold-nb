@@ -287,6 +287,7 @@ class ROCmBenchmark(Benchmark):
                 # start measure
                 print('!!!!!! start')
                 func()
+                print('!!!!!! stop')
                 # stop measure
                 sender.send(0)
                 memory_trace = sender.recv()
