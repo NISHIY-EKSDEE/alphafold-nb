@@ -57,6 +57,7 @@ class ROCmBenchmarkArguments(BenchmarkArguments):
                     f"{deprecated_arg} is depreciated. Please use --no_{positive_arg} or {positive_arg}={kwargs[positive_arg]}"
                 )
         self.model = kwargs.pop("model", None)
+        self.do_multi_processing = kwargs.pop("do_multi_processing", None)
         self.torchscript = kwargs.pop("torchscript", self.torchscript)
         self.torch_xla_tpu_print_metrics = kwargs.pop("torch_xla_tpu_print_metrics", self.torch_xla_tpu_print_metrics)
         self.fp16_opt_level = kwargs.pop("fp16_opt_level", self.fp16_opt_level)
