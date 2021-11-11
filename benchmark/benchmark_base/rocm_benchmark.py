@@ -9,18 +9,17 @@ import jax
 from benchmark.python_smi_tools.rocm_smi import getMemInfo, initializeRsmi
 
 
-
 def print_result(memory, compute_time):
     print("\n" + 20 * "=" + ("INFERENCE - MEMOMRY - SPEED - SUMMARY").center(40) + 20 * "=")
     print("Time in s".center(15) + "Memory in MB".center(15))
-    print(str(compute_time).center(15) + str(memory).center(15))
+    print(str(round(compute_time, 3)).center(15) + str(round(memory, 2)).center(15))
 
 
 def run_rocm_benchmark(model, input):
     memory, compute_time = None, None
     def forward_func():
         return model(**input)
-
+    print('Running speed test')
     runtimes = timeit.repeat(
         forward_func,
         repeat=5,
@@ -28,7 +27,7 @@ def run_rocm_benchmark(model, input):
     )
     compute_time = min(runtimes) / 10.0
 
-    def trace_rocm_memory(device, exit_pipe, interval=0.5):
+    def trace_rocm_memory(device, exit_pipe, interval=compute_time/5):
         memory_trace = []
         while True:
             memory_trace.append(getMemInfo(device, 'vram')[0])

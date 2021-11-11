@@ -1,3 +1,7 @@
+from __future__ import absolute_import
+import sys
+sys.path.append("../..")
+sys.path.append("..")
 import timeit
 from dataclasses import dataclass, field
 from typing import Callable, Optional, Tuple
@@ -21,7 +25,7 @@ from jax import random
 import jax
 from multiprocessing import Pipe, Process
 
-from ..python_smi_tools.rocm_smi import getMemInfo, initializeRsmi
+from benchmark.python_smi_tools.rocm_smi import getMemInfo, initializeRsmi
 
 key = random.PRNGKey(0)
 logger = logging.get_logger(__name__)
