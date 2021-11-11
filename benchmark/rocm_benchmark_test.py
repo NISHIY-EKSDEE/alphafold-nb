@@ -6,8 +6,14 @@ if __name__ == '__main__':
     import jax
 
     tokenizer = GPT2Tokenizer.from_pretrained('EleutherAI/gpt-neo-1.3B')
+
+
+
+    tokenizer = GPT2Tokenizer.from_pretrained('EleutherAI/gpt-neo-1.3B')
     model = FlaxGPTNeoModel.from_pretrained('EleutherAI/gpt-neo-1.3B')
-    print('here')
+    inputs = tokenizer("Hello, my dog is cute", return_tensors='jax')
+    print(inputs)
+
     args = ROCmBenchmarkArguments(model=model, batch_sizes=[8], sequence_lengths=[8, 32, 128, 512],)
     benchmark = ROCmBenchmark(args)
     results = benchmark.run()
