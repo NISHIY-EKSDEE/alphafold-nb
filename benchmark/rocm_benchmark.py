@@ -176,6 +176,7 @@ class ROCmBenchmark(Benchmark):
             return outputs
 
         def encoder_forward():
+            print('ecnoder')
             outputs = inference_model(input_ids)
             return outputs
         _forward = encoder_decoder_forward if config.is_encoder_decoder else encoder_forward
@@ -282,17 +283,19 @@ class ROCmBenchmark(Benchmark):
 
                 initializeRsmi()
                 receiver, sender = Pipe()
-                trace_rocm_memory_porcess = Process(target=trace_rocm_memory, args=(self.args.device, receiver))
-                trace_rocm_memory_porcess.start()
-                # start measure
-                print('!!!!!! start')
-                func()
-                print('!!!!!! stop')
-                # stop measure
-                sender.send(0)
-                memory_trace = sender.recv()
-                trace_rocm_memory_porcess.join()
-
+                try:
+                    trace_rocm_memory_porcess = Process(target=trace_rocm_memory, args=(self.args.device, receiver))
+                    trace_rocm_memory_porcess.start()
+                    # start measure
+                    print('!!!!!! start')
+                    func()
+                    print('!!!!!! stop')
+                    # stop measure
+                    sender.send(0)
+                    memory_trace = sender.recv()
+                    trace_rocm_memory_porcess.join()
+                except:
+                    trace_rocm_memory_porcess.terminate()
 
                 max_bytes_in_use = max(memory_trace)
                 memory = Memory(max_bytes_in_use)
