@@ -176,8 +176,9 @@ class ROCmBenchmark(Benchmark):
             return outputs
 
         def encoder_forward():
-            print('ecnoder')
+            print('encoder')
             outputs = inference_model(input_ids)
+            print('end encoder')
             return outputs
         _forward = encoder_decoder_forward if config.is_encoder_decoder else encoder_forward
         return _forward
