@@ -19,7 +19,7 @@ if __name__ == '__main__':
     print('fail')
     exit()
 
-    args = ROCmBenchmarkArguments(model=model, batch_sizes=[8], sequence_lengths=[8, 32, 128, 512],)
+    args = ROCmBenchmarkArguments(model=model, batch_sizes=[2], sequence_lengths=[8, 32, 128, 512],)
     benchmark = ROCmBenchmark(args)
     results = benchmark.run()
     print(results)

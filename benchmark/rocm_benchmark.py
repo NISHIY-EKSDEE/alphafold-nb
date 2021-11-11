@@ -159,7 +159,7 @@ class ROCmBenchmark(Benchmark):
             model.to(self.args.device)
         # encoder-decoder has vocab size saved differently
         vocab_size = config.vocab_size if hasattr(config, "vocab_size") else config.encoder.vocab_size
-        input_ids = np.random.randint(low=0, high=vocab_size, size=(batch_size, sequence_length))
+        input_ids = np.random.randint(low=0, high=11111, size=(batch_size, sequence_length))
         # input_ids = jax.numpy.array(arr)
         print('!!!!! start inference')
         if self.args.fp16:
@@ -273,7 +273,7 @@ class ROCmBenchmark(Benchmark):
                     "Measuring total GPU usage on GPU device. Make sure to not have additional processes running on the same GPU."
                 )
 
-                def trace_rocm_memory(device, exit_pipe, interval=0.005):
+                def trace_rocm_memory(device, exit_pipe, interval=0.5):
                     memory_trace = []
                     while True:
                         memory_trace.append(getMemInfo(device, 'vram')[0])
