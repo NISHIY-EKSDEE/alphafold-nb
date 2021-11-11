@@ -289,8 +289,8 @@ class ROCmBenchmark(Benchmark):
                 except:
                     trace_rocm_memory_porcess.terminate()
 
-                # max_bytes_in_use = max(memory_trace)
-                memory = Memory(0)
+                max_bytes_in_use = max(memory_trace)
+                memory = Memory(max_bytes_in_use)
             else:
                 # cpu
                 memory_bytes = measure_peak_memory_cpu(func)
