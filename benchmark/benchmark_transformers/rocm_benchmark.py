@@ -21,7 +21,7 @@ from jax import random
 import jax
 from multiprocessing import Pipe, Process
 
-from python_smi_tools.rocm_smi import getMemInfo, initializeRsmi
+from ..python_smi_tools.rocm_smi import getMemInfo, initializeRsmi
 
 key = random.PRNGKey(0)
 logger = logging.get_logger(__name__)
@@ -117,7 +117,6 @@ class ROCmBenchmark(Benchmark):
         self, model_name: str, batch_size: int, sequence_length: int
     ) -> [Memory, Optional[MemorySummary]]:
         _inference = self._prepare_inference_func(model_name, batch_size, sequence_length)
-        print('!!!!! start inference')
         return self._measure_memory(_inference)
 
     def _train_speed(self, model_name: str, batch_size: int, sequence_length: int) -> float:
@@ -134,10 +133,6 @@ class ROCmBenchmark(Benchmark):
         config = self.config_dict[model_name]
         if self.args.model:
             model = self.args.model
-            inference_model = self.args.model
-            res = inference_model(np.random.randint(low=0, high=11111, size=(2, 25)))
-            print(res)
-            print('!!!!! stop inference')
         else:
             if self.args.torchscript:
                 config.torchscript = True
@@ -164,27 +159,20 @@ class ROCmBenchmark(Benchmark):
         # encoder-decoder has vocab size saved differently
         vocab_size = config.vocab_size if hasattr(config, "vocab_size") else config.encoder.vocab_size
         input_ids = np.random.randint(low=0, high=11111, size=(batch_size, sequence_length))
-        # input_ids = jax.numpy.array(arr)
-        print('!!!!! start inference')
+
         inference_model = model
-        res = inference_model(np.random.randint(low=0, high=11111, size=(2, 25)))
-        print(res)
-        print('!!!!! stop inference')
 
         def encoder_decoder_forward():
             outputs = inference_model(input_ids, decoder_input_ids=input_ids)
             return outputs
 
         def encoder_forward():
-            print('encoder')
             outputs = inference_model(input_ids)
-            print('end encoder')
             return outputs
         _forward = encoder_decoder_forward if config.is_encoder_decoder else encoder_forward
         return _forward
 
     def _prepare_train_func(self, model_name: str, batch_size: int, sequence_length: int) -> Callable[[], None]:
-        print('badddd')
         config = self.config_dict[model_name]
 
         has_model_class_in_config = (
@@ -286,19 +274,16 @@ class ROCmBenchmark(Benchmark):
                 initializeRsmi()
                 receiver, sender = Pipe()
                 try:
-                    # trace_rocm_memory_porcess = Process(target=trace_rocm_memory, args=(self.args.device, receiver))
-                    # trace_rocm_memory_porcess.start()
-                    # start measure
-                    print('!!!!!! start')
+                    trace_rocm_memory_porcess = Process(target=trace_rocm_memory, args=(self.args.device, receiver))
+                    trace_rocm_memory_porcess.start()
+
                     func()
-                    print('!!!!!! stop')
-                    # stop measure
-                    # sender.send(0)
-                    # memory_trace = sender.recv()
-                    # trace_rocm_memory_porcess.join()
+
+                    sender.send(0)
+                    memory_trace = sender.recv()
+                    trace_rocm_memory_porcess.join()
                 except:
-                    # trace_rocm_memory_porcess.terminate()
-                    pass
+                    trace_rocm_memory_porcess.terminate()
 
                 # max_bytes_in_use = max(memory_trace)
                 memory = Memory(0)
