@@ -285,21 +285,22 @@ class ROCmBenchmark(Benchmark):
                 initializeRsmi()
                 receiver, sender = Pipe()
                 try:
-                    trace_rocm_memory_porcess = Process(target=trace_rocm_memory, args=(self.args.device, receiver))
-                    trace_rocm_memory_porcess.start()
+                    # trace_rocm_memory_porcess = Process(target=trace_rocm_memory, args=(self.args.device, receiver))
+                    # trace_rocm_memory_porcess.start()
                     # start measure
                     print('!!!!!! start')
                     func()
                     print('!!!!!! stop')
                     # stop measure
-                    sender.send(0)
-                    memory_trace = sender.recv()
-                    trace_rocm_memory_porcess.join()
+                    # sender.send(0)
+                    # memory_trace = sender.recv()
+                    # trace_rocm_memory_porcess.join()
                 except:
-                    trace_rocm_memory_porcess.terminate()
+                    # trace_rocm_memory_porcess.terminate()
+                pass
 
-                max_bytes_in_use = max(memory_trace)
-                memory = Memory(max_bytes_in_use)
+                # max_bytes_in_use = max(memory_trace)
+                memory = Memory(0)
             else:
                 # cpu
                 memory_bytes = measure_peak_memory_cpu(func)
