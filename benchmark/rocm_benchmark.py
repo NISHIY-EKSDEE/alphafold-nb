@@ -53,6 +53,10 @@ class ROCmBenchmarkArguments(BenchmarkArguments):
                     f"{deprecated_arg} is depreciated. Please use --no_{positive_arg} or {positive_arg}={kwargs[positive_arg]}"
                 )
         self.model = kwargs.pop("model", None)
+        inference_model = self.model
+        res = inference_model(np.random.randint(low=0, high=11111, size=(2, 25)))
+        print(res)
+        print('!!!!! stop inference')
         self.torchscript = kwargs.pop("torchscript", self.torchscript)
         self.torch_xla_tpu_print_metrics = kwargs.pop("torch_xla_tpu_print_metrics", self.torch_xla_tpu_print_metrics)
         self.fp16_opt_level = kwargs.pop("fp16_opt_level", self.fp16_opt_level)
@@ -134,7 +138,6 @@ class ROCmBenchmark(Benchmark):
         config = self.config_dict[model_name]
         if self.args.model:
             model = self.args.model
-            print(model)
         else:
             if self.args.torchscript:
                 config.torchscript = True
