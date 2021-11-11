@@ -162,13 +162,6 @@ class ROCmBenchmark(Benchmark):
         input_ids = np.random.randint(low=0, high=11111, size=(batch_size, sequence_length))
         # input_ids = jax.numpy.array(arr)
         print('!!!!! start inference')
-        if self.args.fp16:
-            logger.info("Running training in Mixed Precision...")
-            assert self.args.is_gpu, "Mixed precision is possible only for GPU."
-            # amp seems to have memory leaks so that memory usage
-            # is measured using .half() for now https://github.com/NVIDIA/apex/issues/439
-            model.half()
-
         inference_model = model
 
         def encoder_decoder_forward():
@@ -184,6 +177,7 @@ class ROCmBenchmark(Benchmark):
         return _forward
 
     def _prepare_train_func(self, model_name: str, batch_size: int, sequence_length: int) -> Callable[[], None]:
+        print('badddd')
         config = self.config_dict[model_name]
 
         has_model_class_in_config = (
