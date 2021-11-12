@@ -6,7 +6,7 @@ if __name__ == '__main__':
     from transformers import FlaxPreTrainedModel
     
     parser = argparse.ArgumentParser()
-    parser.add_argument('model_name', type=str, required=True)
+    parser.add_argument('--model_name', type=str, required=True)
     args = parser.parse_args()
 
     model = FlaxPreTrainedModel.from_pretrained(args.model_name)
