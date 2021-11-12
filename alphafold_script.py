@@ -201,7 +201,6 @@ for sequence_index, sequence in enumerate(sequences, start=1):
     elif merged_msa.sequences and db_name == 'uniprot':
       uniprot_msa = merged_msa
 
-  print('[DEBUG] Before show_msa_info (uses plt.show inside, may fail in docker container)')
   notebook_utils.show_msa_info(single_chain_msas=single_chain_msas, sequence_index=sequence_index)
 
   # Turn the raw data into model features.
