@@ -6,9 +6,7 @@ if __name__ == '__main__':
     tokenizer = GPT2Tokenizer.from_pretrained('EleutherAI/gpt-neo-1.3B')
     model = FlaxGPTNeoModel.from_pretrained('EleutherAI/gpt-neo-1.3B')
 
-    # args = ROCmBenchmarkArguments(model=model, batch_sizes=[2], sequence_lengths=[8, 32],
-    #                               multi_process=False)
-    args = ROCmBenchmarkArguments(models=['bert-base-uncased', 'EleutherAI/gpt-neo-1.3B'], batch_sizes=[8], sequence_lengths=[8, 32, 128, 512],
+    args = ROCmBenchmarkArguments(model=model, models=['EleutherAI/gpt-neo-1.3B'], batch_sizes=[8], sequence_lengths=[8, 32, 128, 512],
                                   multi_process=False)
     benchmark = ROCmBenchmark(args)
     results = benchmark.run()
