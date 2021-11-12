@@ -8,7 +8,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--model_name', type=str, required=True)
     args = parser.parse_args()
-
+    
+    print('Model name: {}'.format(args.model_name))
     model = FlaxPreTrainedModel.from_pretrained(args.model_name)
 
     args = ROCmBenchmarkArguments(model=model, models=[args.model_name], batch_sizes=[8], sequence_lengths=[8, 32, 128, 512],
